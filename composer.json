@@ -1,7 +1,7 @@
 {
   "name": "flipboxdigital/salesforce",
   "description": "Salesforce RESTful API",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "keywords": [
     "flipbox",
     "salesforce"
@@ -15,7 +15,7 @@
   ],
   "require": {
     "php": ">=7.0",
-    "flipboxdigital/relay-salesforce": "~1.0",
+    "flipboxdigital/relay-salesforce": "~2.0",
     "flipboxdigital/skeleton": "~2.1",
     "flipboxdigital/transform": "~2.0",
     "flipboxdigital/pipeline": "~1.0"
