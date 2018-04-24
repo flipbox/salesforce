@@ -14,8 +14,8 @@ use Flipbox\Salesforce\Connections\ConnectionInterface;
 use Flipbox\Salesforce\Resources\Resource;
 use Flipbox\Salesforce\Salesforce;
 use Flipbox\Salesforce\Transformers\Collections\TransformerCollectionInterface;
-use Psr\Cache\CacheItemPoolInterface;
 use Psr\Log\LoggerInterface;
+use Psr\SimpleCache\CacheInterface;
 
 /**
  * @author Flipbox Factory <hello@flipboxfactory.com>
@@ -26,7 +26,7 @@ class Basic extends Resource
     /**
      * @param string $sObject
      * @param ConnectionInterface $connection
-     * @param CacheItemPoolInterface $cache
+     * @param CacheInterface $cache
      * @param TransformerCollectionInterface|null $transformers
      * @param LoggerInterface|null $logger
      * @param array $config
@@ -34,7 +34,7 @@ class Basic extends Resource
     public function __construct(
         string $sObject,
         ConnectionInterface $connection,
-        CacheItemPoolInterface $cache,
+        CacheInterface $cache,
         TransformerCollectionInterface $transformers = null,
         LoggerInterface $logger = null,
         array $config = []
@@ -51,14 +51,14 @@ class Basic extends Resource
 
     /**
      * @param ConnectionInterface $connection
-     * @param CacheItemPoolInterface $cache
+     * @param CacheInterface $cache
      * @param string $sobject
      * @param LoggerInterface|null $logger
      * @return Runner
      */
     private function createRelay(
         ConnectionInterface $connection,
-        CacheItemPoolInterface $cache,
+        CacheInterface $cache,
         string $sobject,
         LoggerInterface $logger = null
     ): Runner {

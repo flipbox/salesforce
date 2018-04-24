@@ -14,8 +14,8 @@ use Flipbox\Salesforce\Connections\ConnectionInterface;
 use Flipbox\Salesforce\Resources\Resource;
 use Flipbox\Salesforce\Salesforce;
 use Flipbox\Salesforce\Transformers\Collections\TransformerCollectionInterface;
-use Psr\Cache\CacheItemPoolInterface;
 use Psr\Log\LoggerInterface;
+use Psr\SimpleCache\CacheInterface;
 
 /**
  * @author Flipbox Factory <hello@flipboxfactory.com>
@@ -27,7 +27,7 @@ class Upsert extends Resource
      * @param string $sObject
      * @param array $payload
      * @param ConnectionInterface $connection
-     * @param CacheItemPoolInterface $cache
+     * @param CacheInterface $cache
      * @param string|null $id
      * @param TransformerCollectionInterface $transformers = null
      * @param LoggerInterface|null $logger
@@ -37,7 +37,7 @@ class Upsert extends Resource
         string $sObject,
         array $payload,
         ConnectionInterface $connection,
-        CacheItemPoolInterface $cache,
+        CacheInterface $cache,
         string $id = null,
         TransformerCollectionInterface $transformers = null,
         LoggerInterface $logger = null,
@@ -55,7 +55,7 @@ class Upsert extends Resource
 
     /**
      * @param ConnectionInterface $connection
-     * @param CacheItemPoolInterface $cache
+     * @param CacheInterface $cache
      * @param string $sobject
      * @param array $payload
      * @param string|null $id
@@ -64,7 +64,7 @@ class Upsert extends Resource
      */
     private function createStage(
         ConnectionInterface $connection,
-        CacheItemPoolInterface $cache,
+        CacheInterface $cache,
         string $sobject,
         array $payload,
         string $id = null,

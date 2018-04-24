@@ -58,8 +58,7 @@ class Resource extends AbstractResource
      * @return HttpResponseTransformerPipeline
      */
     protected function buildDataPipeline(TransformerCollectionInterface $transformers = null
-    ): HttpResponseTransformerPipeline
-    {
+    ): HttpResponseTransformerPipeline {
         $stages = [];
         foreach ($this->responseTransformers as $key => $stage) {
             if (null === $transformers ||
