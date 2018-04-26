@@ -62,9 +62,9 @@ class HttpResponseProcessor extends SelectableStageProcessor
      * @param ResponseInterface $response
      * @return array
      */
-    protected function processPayload(ResponseInterface $response)
+    protected function processPayload(ResponseInterface $response): array
     {
-        return JsonHelper::decodeIfJson(
+        return (array) JsonHelper::decodeIfJson(
             $response->getBody()->getContents()
         );
     }
