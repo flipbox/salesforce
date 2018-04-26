@@ -1,7 +1,7 @@
 # Changelog
 All Notable changes to `flipboxdigital\salesforce` will be documented in this file
 
-## Unreleased
+## 2.0.1 - 2018-04-26
 ### Changed
 - `\Flipbox\Salesforce\Pipeline\Processors\HttpResponseProcessor::processPayload` will always return an array, regardless if no content was returned.
 
