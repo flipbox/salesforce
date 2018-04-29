@@ -17,4 +17,10 @@ use Flipbox\Relay\Salesforce\InstanceInterface;
  */
 interface ConnectionInterface extends InstanceInterface, AuthorizationInterface
 {
+    /**
+     * The Salesforce Connection Instance URL
+     *
+     * @return string
+     */
+    public function getInstanceUrl(): string;
 }
