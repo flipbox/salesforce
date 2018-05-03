@@ -1,10 +1,13 @@
 # Changelog
 All Notable changes to `flipboxdigital\salesforce` will be documented in this file
 
-## Unreleased
+## 2.2.0 - 2018-05-03
 ### Removed
 - Removed the HTTP Response Transformer pipeline in favor of simply adding a transformer stage.
 - Unused response Collection classes
+
+### Changed
+- Overall flow of transforming data via the pipeline
 
 ## 2.1.0 - 2018-04-29
 ### Added
