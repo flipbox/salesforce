@@ -1,7 +1,7 @@
 # Changelog
 All Notable changes to `flipboxdigital\salesforce` will be documented in this file
 
-## Unreleased
+## 2.2.0.1 - 2018-05-03
 ### Fixed
 - When reference data passed through pipeline, HTTP Relay was using it as it's expected response.
 
