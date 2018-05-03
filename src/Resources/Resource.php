@@ -8,12 +8,14 @@
 
 namespace Flipbox\Salesforce\Resources;
 
+use Flipbox\Pipeline\Builders\BuilderTrait;
 use Flipbox\Relay\Runner\Runner;
-use Flipbox\Salesforce\Pipeline\Pipelines\HttpResponseTransformerPipeline;
-use Flipbox\Salesforce\Pipeline\Processors\HttpResponseProcessor;
-use Flipbox\Salesforce\Pipeline\Stages\Transformers\Item;
+use Flipbox\Salesforce\Pipeline\Pipelines\HttpPipeline;
+use Flipbox\Salesforce\Pipeline\Stages\TransformerCollectionStage;
 use Flipbox\Salesforce\Salesforce;
 use Flipbox\Salesforce\Transformers\Collections\TransformerCollectionInterface;
+use Flipbox\Skeleton\Object\AbstractObject;
+use League\Pipeline\PipelineBuilderInterface;
 use Psr\Log\LoggerInterface;
 
 /**
@@ -22,58 +24,81 @@ use Psr\Log\LoggerInterface;
  * @author Flipbox Factory <hello@flipboxfactory.com>
  * @since 1.0.0
  */
-class Resource extends AbstractResource
+class Resource extends AbstractObject implements PipelineBuilderInterface
 {
+    use BuilderTrait;
+
     /**
-     * @var array
+     * @var Runner
      */
-    public $responseTransformers = [
-        HttpResponseProcessor::ERROR_KEY => Item::class,
-        HttpResponseProcessor::SUCCESS_KEY => Item::class
-    ];
+    protected $runner;
+
+    /**
+     * @var TransformerCollectionStage|null
+     */
+    protected $transformer;
 
     /**
      * @param Runner $runner
-     * @param TransformerCollectionInterface|null $transformers
+     * @param TransformerCollectionInterface|null $transformer
      * @param LoggerInterface|null $logger
      * @param array $config
      */
     public function __construct(
         Runner $runner,
-        TransformerCollectionInterface $transformers = null,
+        TransformerCollectionInterface $transformer = null,
         LoggerInterface $logger = null,
         array $config = []
     ) {
-        $logger = $logger ?: Salesforce::getLogger();
+        $this->setLogger($logger ?: Salesforce::getLogger());
+        $this->runner = $runner;
+        $this->transformer = $transformer;
 
-        parent::__construct(
-            $runner,
-            $this->buildDataPipeline($transformers),
-            $logger
+        parent::__construct($config);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    protected function createPipeline(array $config = []): HttpPipeline
+    {
+        return new HttpPipeline(
+            $this->runner,
+            $this->createTransformerStage($this->transformer),
+            $config
         );
     }
 
     /**
-     * @param TransformerCollectionInterface $transformers
-     * @return HttpResponseTransformerPipeline
+     * @param null $source
+     * @return mixed
      */
-    protected function buildDataPipeline(
-        TransformerCollectionInterface $transformers = null
-    ): HttpResponseTransformerPipeline {
-        $stages = [];
-        foreach ($this->responseTransformers as $key => $stage) {
-            if (null === $transformers ||
-                null === ($transformer = $transformers->getTransformer($key))
-            ) {
-                continue;
-            }
+    public function execute($source = null)
+    {
+        // Resources do not pass a payload ... but they can pass a source, so that why this may look funny
+        return call_user_func_array($this->build(), [null, $source]);
+    }
 
-            $stages[$key] = [
-                'class' => $stage,
-                'transformer' => $transformer
-            ];
+    /**
+     * @param mixed|null $source
+     * @return mixed
+     */
+    public function __invoke($source = null)
+    {
+        return $this->execute($source);
+    }
+
+    /**
+     * @param TransformerCollectionInterface|null $transformer
+     * @return TransformerCollectionStage|null
+     */
+    private function createTransformerStage(
+        TransformerCollectionInterface $transformer = null
+    ) {
+        if ($transformer === null) {
+            return null;
         }
 
-        return new HttpResponseTransformerPipeline(['stages' => $stages]);
+        return new TransformerCollectionStage($transformer);
     }
 }

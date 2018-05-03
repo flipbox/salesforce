@@ -17,6 +17,16 @@ use Flipbox\Transform\Transformers\TransformerInterface;
 interface TransformerCollectionInterface
 {
     /**
+     * The stage key for 'successful' HTTP Response
+     */
+    const SUCCESS_KEY = 'response';
+
+    /**
+     * The stage key for 'error' HTTP Response
+     */
+    const ERROR_KEY = 'error';
+
+    /**
      * @param string $key
      * @return TransformerInterface|callable|null
      */

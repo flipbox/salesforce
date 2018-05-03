@@ -8,9 +8,13 @@
 
 namespace Flipbox\Salesforce\Transformers\Response;
 
-use Flipbox\Salesforce\Collections\QueryCollection as Collection;
+use Flipbox\Salesforce\Collections\Collection;
+use Flipbox\Salesforce\Helpers\TransformerHelper;
+use Flipbox\Skeleton\Helpers\ObjectHelper;
+use Flipbox\Transform\Factory;
 use Flipbox\Transform\Transformers\AbstractTransformer;
 use Flipbox\Transform\Transformers\Traits\ArrayToObject;
+use Flipbox\Transform\Transformers\TransformerInterface;
 
 /**
  * @author Flipbox Factory <hello@flipboxfactory.com>
@@ -21,20 +25,31 @@ class QueryCollection extends AbstractTransformer
     use ArrayToObject;
 
     /**
-     * The record level transformer
-     *
-     * @var mixed
+     * @var callable|TransformerInterface|null
      */
-    public $record;
+    public $transformer;
 
     /**
      * @inheritdoc
      */
     public function transform(array $data): Collection
     {
-        return new Collection(array_merge(
-            ['transformer' => $this->record],
+        $collection = new Collection();
+
+        if (null === ($transformer = TransformerHelper::resolve($this->transformer))) {
+            return $collection;
+        }
+
+        $data = Factory::item(
+            $transformer,
             $data
-        ));
+        );
+
+        ObjectHelper::configure(
+            $collection,
+            $data
+        );
+
+        return $collection;
     }
 }

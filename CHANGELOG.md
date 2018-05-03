@@ -1,6 +1,11 @@
 # Changelog
 All Notable changes to `flipboxdigital\salesforce` will be documented in this file
 
+## Unreleased
+### Removed
+- Removed the HTTP Response Transformer pipeline in favor of simply adding a transformer stage.
+- Unused response Collection classes
+
 ## 2.1.0 - 2018-04-29
 ### Added
 - `\Flipbox\Salesforce\Connections\ConnectionInterface::getInstanceUrl()` to easily identify the Salesforce Instance.

@@ -27,14 +27,14 @@ class HttpPipeline extends Pipeline
     use AutoLoggerTrait;
 
     /**
-     * @var callable|PipelineInterface
+     * @var callable
      */
     private $relay;
 
     /**
-     * @var callable|PipelineInterface
+     * @var callable
      */
-    private $data;
+    private $transformer;
 
     /**
      * @inheritdoc
@@ -43,16 +43,16 @@ class HttpPipeline extends Pipeline
 
     /**
      * @param callable $relay
-     * @param callable $data
+     * @param callable $transformer
      * @param array $config
      */
     public function __construct(
         callable $relay,
-        callable $data,
+        callable $transformer = null,
         $config = []
     ) {
         $this->relay = $relay;
-        $this->data = $data;
+        $this->transformer = $transformer;
         parent::__construct($config);
     }
 
@@ -62,7 +62,7 @@ class HttpPipeline extends Pipeline
     public function process($payload = null, $source = null)
     {
         $stages = array_merge(
-            [$this->relay, $this->data],
+            array_filter([$this->relay, $this->transformer]),
             $this->getStages()
         );
 

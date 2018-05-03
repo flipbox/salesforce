@@ -27,8 +27,8 @@ trait TransformerCollectionTrait
      * @var array
      */
     public $keys = [
-        'response',
-        'error'
+        TransformerCollectionInterface::SUCCESS_KEY,
+        TransformerCollectionInterface::ERROR_KEY
     ];
 
     /*******************************************
