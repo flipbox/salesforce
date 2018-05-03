@@ -65,7 +65,7 @@ class Resource extends AbstractObject implements PipelineBuilderInterface
     protected function createPipeline(array $config = []): HttpPipeline
     {
         $pipeline = new HttpPipeline(
-            function() {
+            function () {
                 return call_user_func($this->runner);
             },
             $this->createTransformerStage($this->transformer),
