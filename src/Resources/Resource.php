@@ -23,6 +23,8 @@ use Psr\Log\LoggerInterface;
  *
  * @author Flipbox Factory <hello@flipboxfactory.com>
  * @since 1.0.0
+ *
+ * @method HttpPipeline build()
  */
 class Resource extends AbstractObject implements PipelineBuilderInterface
 {
@@ -62,11 +64,17 @@ class Resource extends AbstractObject implements PipelineBuilderInterface
      */
     protected function createPipeline(array $config = []): HttpPipeline
     {
-        return new HttpPipeline(
-            $this->runner,
+        $pipeline = new HttpPipeline(
+            function() {
+                return call_user_func($this->runner);
+            },
             $this->createTransformerStage($this->transformer),
             $config
         );
+
+        $pipeline->setLogger($this->getLogger());
+
+        return $pipeline;
     }
 
     /**

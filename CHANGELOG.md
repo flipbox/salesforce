@@ -1,6 +1,10 @@
 # Changelog
 All Notable changes to `flipboxdigital\salesforce` will be documented in this file
 
+## Unreleased
+### Fixed
+- When reference data passed through pipeline, HTTP Relay was using it as it's expected response.
+
 ## 2.2.0 - 2018-05-03
 ### Removed
 - Removed the HTTP Response Transformer pipeline in favor of simply adding a transformer stage.
