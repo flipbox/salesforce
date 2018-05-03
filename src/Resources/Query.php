@@ -11,6 +11,7 @@ namespace Flipbox\Salesforce\Resources;
 use Flipbox\Relay\Runner\Runner;
 use Flipbox\Relay\Salesforce\Builder\Resources\Query as QueryRelayBuilder;
 use Flipbox\Salesforce\Connections\ConnectionInterface;
+use Flipbox\Salesforce\Salesforce;
 use Flipbox\Salesforce\Transformers\Collections\TransformerCollectionInterface;
 use Psr\Log\LoggerInterface;
 use Psr\SimpleCache\CacheInterface;
@@ -37,6 +38,8 @@ class Query extends Resource
         LoggerInterface $logger = null,
         array $config = []
     ) {
+        $logger = $logger ?: Salesforce::getLogger();
+
         parent::__construct(
             $this->createRelay($connection, $cache, $soql, $logger),
             $transformers,
