@@ -34,7 +34,7 @@ class Resource extends AbstractObject implements PipelineBuilderInterface
     protected $runner;
 
     /**
-     * @var TransformerCollectionStage|null
+     * @var TransformerCollectionInterface|null
      */
     protected $transformer;
 
