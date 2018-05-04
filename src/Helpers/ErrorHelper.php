@@ -61,4 +61,33 @@ class ErrorHelper
 
         return false;
     }
+
+    /**
+     * @param string $errorMessage
+     * @param string $errorCode
+     * @param array $fields
+     * @return array
+     */
+    public static function interpretSObjectError(string $errorMessage, string $errorCode, array $fields = []): array
+    {
+        $errorKeys = ($fields ?: $errorCode);
+
+        switch ($errorCode) {
+            // error message looks similar to: No such column 'Foo' on sobject of type Bar
+            case 'INVALID_FIELD':
+                $errorKeys = static::getFieldNameFromMessage($errorMessage);
+                break;
+
+            case 'REQUIRED_FIELD_MISSING':
+                $errorKeys = static::getFieldNamesFromRequiredMessage($errorMessage);
+                break;
+
+            case 'FIELD_CUSTOM_VALIDATION_EXCEPTION':
+                if (empty($fields)) {
+                    $errorKeys = $errorCode;
+                }
+        }
+
+        return [$errorKeys, $errorMessage, $errorCode];
+    }
 }

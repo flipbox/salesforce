@@ -8,9 +8,7 @@
 
 namespace Flipbox\Salesforce\Transformers\Collections;
 
-use flipbox\ember\helpers\ArrayHelper;
 use Flipbox\Salesforce\Helpers\TransformerHelper;
-use Flipbox\Transform\Transformers\TransformerInterface;
 
 /**
  * @author Flipbox Factory <hello@flipboxfactory.com>
@@ -23,37 +21,9 @@ trait TransformerCollectionTrait
      */
     protected $transformers = [];
 
-    /**
-     * @var array
-     */
-    public $keys = [
-        TransformerCollectionInterface::SUCCESS_KEY,
-        TransformerCollectionInterface::ERROR_KEY
-    ];
-
     /*******************************************
      * TRANSFORMER
      *******************************************/
-
-    /**
-     * Checks if any of the keys have explicitly been defined.
-     *
-     * @return bool
-     */
-    protected function hasExplicitTransformersDefined(): bool
-    {
-        if (!is_array($this->transformers)) {
-            return false;
-        }
-
-        foreach ($this->keys as $key) {
-            if (array_key_exists($key, $this->transformers)) {
-                return true;
-            }
-        }
-
-        return false;
-    }
 
     /**
      * @param $transformers
@@ -61,7 +31,14 @@ trait TransformerCollectionTrait
      */
     public function setTransformers($transformers)
     {
-        $this->transformers = $this->ensureArray($transformers);
+        if (!is_array($transformers)) {
+            $transformers = empty($transformers) ? [] : ['default' => $transformers];
+        }
+
+        foreach ($transformers as $key => $value) {
+            $this->addTransformer($key, $value);
+        }
+
         return $this;
     }
 
@@ -77,41 +54,16 @@ trait TransformerCollectionTrait
     }
 
     /**
-     * @param $transformers
-     * @return array
-     */
-    protected function ensureArray($transformers): array
-    {
-        if (!is_array($transformers)) {
-            $transformers = empty($transformers) ? [] : ['default' => $transformers];
-        }
-
-        return $transformers;
-    }
-
-
-    /**
      * @param string $key
-     * @return TransformerInterface|mixed|null|string
-     */
-    protected function lookupTransformer(string $key)
-    {
-        $transformer = $this->transformers;
-
-        if ($this->hasExplicitTransformersDefined()) {
-            $transformer = ArrayHelper::remove($transformer, $key);
-        }
-
-        return $transformer;
-    }
-
-    /**
-     * @inheritdoc
+     * @return callable|\Flipbox\Transform\Transformers\TransformerInterface|null
+     * @throws \Flipbox\Skeleton\Exceptions\InvalidConfigurationException
      */
     public function getTransformer(string $key)
     {
-        return TransformerHelper::resolve(
-            $this->lookupTransformer($key)
-        );
+        if (!array_key_exists($key, $this->transformers)) {
+            return null;
+        }
+
+        return TransformerHelper::resolve($this->transformers[$key]);
     }
 }
