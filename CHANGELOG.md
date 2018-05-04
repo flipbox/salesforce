@@ -1,7 +1,7 @@
 # Changelog
 All Notable changes to `flipboxdigital\salesforce` will be documented in this file
 
-## Unreleased
+## 2.3.0 - 2018-05-04
 ### Removed
 - Various unused transformer classes
 
