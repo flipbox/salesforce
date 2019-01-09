@@ -19,12 +19,12 @@ class DynamicQueryBuilder extends RawQueryBuilder
     /**
      * The opening variable character
      */
-    const VARIABLE_OPENING = '{';
+    const VARIABLE_OPENING = '{{';
 
     /**
      * The closing variable character
      */
-    const VARIABLE_CLOSING = '}';
+    const VARIABLE_CLOSING = '}}';
 
     /**
      * @inheritdoc
@@ -64,7 +64,8 @@ class DynamicQueryBuilder extends RawQueryBuilder
         $values = [];
 
         foreach ($variables as $variable) {
-            $values[self::VARIABLE_OPENING . $variable . self::VARIABLE_CLOSING] = ($attributes[$variable] ?? $variable);
+            $values[self::VARIABLE_OPENING . $variable . self::VARIABLE_CLOSING] =
+                ($attributes[$variable] ?? $variable);
         }
 
         return $values;

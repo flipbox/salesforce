@@ -19,12 +19,12 @@ class DynamicSearchBuilder extends RawSearchBuilder
     /**
      * The opening variable character
      */
-    const VARIABLE_OPENING = '{';
+    const VARIABLE_OPENING = '{{';
 
     /**
      * The closing variable character
      */
-    const VARIABLE_CLOSING = '}';
+    const VARIABLE_CLOSING = '}}';
 
     /**
      * @inheritdoc
@@ -64,7 +64,8 @@ class DynamicSearchBuilder extends RawSearchBuilder
         $values = [];
 
         foreach ($variables as $variable) {
-            $values[self::VARIABLE_OPENING . $variable . self::VARIABLE_CLOSING] = ($attributes[$variable] ?? $variable);
+            $values[self::VARIABLE_OPENING . $variable . self::VARIABLE_CLOSING] =
+                ($attributes[$variable] ?? $variable);
         }
 
         return $values;
