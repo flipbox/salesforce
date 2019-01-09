@@ -8,65 +8,79 @@
 
 namespace Flipbox\Salesforce\Resources;
 
-use Flipbox\Relay\Runner\Runner;
-use Flipbox\Relay\Salesforce\Builder\Resources\Query as QueryRelayBuilder;
+use Flipbox\Relay\Salesforce\Builder\Resources\Search as SearchBuilder;
 use Flipbox\Salesforce\Connections\ConnectionInterface;
 use Flipbox\Salesforce\Salesforce;
-use Flipbox\Salesforce\Transformers\Collections\TransformerCollectionInterface;
+use Psr\Http\Message\ResponseInterface;
 use Psr\Log\LoggerInterface;
 use Psr\SimpleCache\CacheInterface;
 
+
 /**
  * @author Flipbox Factory <hello@flipboxfactory.com>
- * @since 1.0.0
+ * @since 3.0.0
  */
-class Search extends Resource
+class Search
 {
     /**
-     * @param string|null $sosl
+     * The resource name
+     */
+    const SALESFORCE_RESOURCE = 'search';
+
+    /*******************************************
+     * QUERY
+     *******************************************/
+
+    /**
      * @param ConnectionInterface $connection
      * @param CacheInterface $cache
-     * @param TransformerCollectionInterface|null $transformers
+     * @param string $search
      * @param LoggerInterface|null $logger
      * @param array $config
+     * @return ResponseInterface
      */
-    public function __construct(
-        string $sosl,
+    public static function search(
         ConnectionInterface $connection,
         CacheInterface $cache,
-        TransformerCollectionInterface $transformers = null,
+        string $search,
         LoggerInterface $logger = null,
         array $config = []
-    ) {
-        $logger = $logger ?: Salesforce::getLogger();
-
-        parent::__construct(
-            $this->createRelay($connection, $cache, $sosl, $logger),
-            $transformers,
+    ): ResponseInterface
+    {
+        return static::searchRelay(
+            $connection,
+            $cache,
+            $search,
             $logger,
             $config
-        );
+        )();
     }
 
     /**
      * @param ConnectionInterface $connection
      * @param CacheInterface $cache
-     * @param string $sosl
+     * @param string $search
      * @param LoggerInterface|null $logger
-     * @return Runner
+     * @param array $config
+     * @return callable
      */
-    private function createRelay(
+    public static function searchRelay(
         ConnectionInterface $connection,
         CacheInterface $cache,
-        string $sosl,
-        LoggerInterface $logger = null
-    ): Runner {
-        return (new QueryRelayBuilder(
+        string $search,
+        LoggerInterface $logger = null,
+        array $config = []
+    ): callable
+    {
+        $builder = new SearchBuilder(
             $connection,
             $connection,
             $cache,
-            $sosl,
-            $logger
-        ))->build();
+            $search,
+            $logger ?: Salesforce::getLogger(),
+            $config
+        );
+
+        return $builder->build();
     }
 }

@@ -6,13 +6,13 @@
  * @link       https://github.com/flipbox/salesforce
  */
 
-namespace Flipbox\Salesforce\Query;
+namespace Flipbox\Salesforce\Search;
 
 /**
  * @author Flipbox Factory <hello@flipboxfactory.com>
  * @since 3.0.0
  */
-class DynamicQueryBuilder extends RawQueryBuilder
+class DynamicSearchBuilder extends RawSearchBuilder
 {
     use DynamicVariablesAttributeTrait;
 
@@ -31,14 +31,14 @@ class DynamicQueryBuilder extends RawQueryBuilder
      */
     public function build(): string
     {
-        return $this->prepareSoql($this->soql);
+        return $this->prepareSearch($this->search);
     }
 
     /**
      * @param string $soql
      * @return string
      */
-    private function prepareSoql(string $soql): string
+    private function prepareSearch(string $soql): string
     {
         if (false === (preg_match_all(
                 '/' . self::VARIABLE_OPENING . '(.*?)' . self::VARIABLE_CLOSING . '/',

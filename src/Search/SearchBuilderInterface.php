@@ -6,14 +6,19 @@
  * @link       https://github.com/flipbox/salesforce
  */
 
-namespace Flipbox\Salesforce\Query;
+namespace Flipbox\Salesforce\Search;
 
 /**
  * @author Flipbox Factory <hello@flipboxfactory.com>
  * @since 3.0.0
  */
-interface QueryBuilderInterface
+interface SearchBuilderInterface
 {
+    /**
+     * @return array
+     */
+    public function toConfig(): array;
+
     /**
      * @return string
      */

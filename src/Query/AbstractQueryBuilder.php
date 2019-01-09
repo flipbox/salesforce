@@ -8,17 +8,16 @@
 
 namespace Flipbox\Salesforce\Query;
 
-use flipbox\force\Force;
 use Flipbox\Skeleton\Object\AbstractObject;
 
 /**
  * @author Flipbox Factory <hello@flipboxfactory.com>
- * @since 1.0.0
+ * @since 3.0.0
  */
 abstract class AbstractQueryBuilder extends AbstractObject implements QueryBuilderInterface
 {
     /**
-     * @return mixed|string
+     * @return string
      */
     public function __toString()
     {

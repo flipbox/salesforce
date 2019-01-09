@@ -1,7 +1,7 @@
 {
   "name": "flipboxdigital/salesforce",
-  "description": "Salesforce RESTful API",
-  "version": "2.3.0",
+  "description": "Salesforce API.",
+  "version": "3.0.0",
   "keywords": [
     "flipbox",
     "salesforce"
@@ -15,13 +15,11 @@
   ],
   "require": {
     "php": ">=7.0",
-    "flipboxdigital/relay-salesforce": "~2.0",
-    "flipboxdigital/skeleton": "~2.1",
-    "flipboxdigital/transform": "~2.0",
-    "flipboxdigital/pipeline": "~1.0"
+    "flipboxdigital/relay-salesforce": "~2.0"
   },
   "require-dev": {
     "phpunit/phpunit": "^5.0",
+    "psr/log": "^1.0.1",
     "squizlabs/php_codesniffer": "^2.0"
   },
   "autoload": {
@@ -34,13 +32,10 @@
       "Flipbox\\Salesforce\\Tests\\": "tests/src/"
     }
   },
-  "config": {
-    "optimize-autoloader": true
-  },
-  "repositories": [
-    {
-      "type": "composer",
-      "url": "https://packagist.org"
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0.x-dev",
+      "dev-develop": "1.0.x-dev"
     }
-  ]
+  }
 }

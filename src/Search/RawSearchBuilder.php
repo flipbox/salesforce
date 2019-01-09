@@ -6,27 +6,27 @@
  * @link       https://github.com/flipbox/salesforce
  */
 
-namespace Flipbox\Salesforce\Query;
+namespace Flipbox\Salesforce\Search;
 
 /**
  * @author Flipbox Factory <hello@flipboxfactory.com>
  * @since 3.0.0
  */
-class RawQueryBuilder extends AbstractQueryBuilder
+class RawSearchBuilder extends AbstractSearchBuilder
 {
     /**
      * The soql query
      *
      * @var string
      */
-    public $soql;
+    public $search;
 
     /**
      * @inheritdoc
      */
     public function build(): string
     {
-        return (string)$this->soql;
+        return (string)$this->search;
     }
 
     /**
@@ -37,7 +37,7 @@ class RawQueryBuilder extends AbstractQueryBuilder
         return array_merge(
             parent::toConfig(),
             [
-                'soql' => $this->soql
+                'search' => $this->search
             ]
         );
     }
