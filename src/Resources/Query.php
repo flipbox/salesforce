@@ -45,8 +45,7 @@ class Query
         string $query,
         LoggerInterface $logger = null,
         array $config = []
-    ): ResponseInterface
-    {
+    ): ResponseInterface {
         return static::queryRelay(
             $connection,
             $cache,
@@ -70,8 +69,7 @@ class Query
         string $query,
         LoggerInterface $logger = null,
         array $config = []
-    ): callable
-    {
+    ): callable {
         $builder = new QueryBuilder(
             $connection,
             $connection,

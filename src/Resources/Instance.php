@@ -46,8 +46,7 @@ class Instance
         CacheInterface $cache,
         LoggerInterface $logger = null,
         array $config = []
-    ): ResponseInterface
-    {
+    ): ResponseInterface {
         return static::describeRelay(
             $connection,
             $cache,
@@ -68,8 +67,7 @@ class Instance
         CacheInterface $cache,
         LoggerInterface $logger = null,
         array $config = []
-    ): callable
-    {
+    ): callable {
         /** @var RelayBuilderInterface $builder */
         $builder = new Describe(
             $connection,
@@ -98,8 +96,7 @@ class Instance
         CacheInterface $cache,
         LoggerInterface $logger = null,
         array $config = []
-    ): callable
-    {
+    ): callable {
         /** @var RelayBuilderInterface $builder */
         $builder = new Limits(
             $connection,
@@ -124,8 +121,7 @@ class Instance
         CacheInterface $cache,
         LoggerInterface $logger = null,
         array $config = []
-    ): ResponseInterface
-    {
+    ): ResponseInterface {
         return static::limitsRelay(
             $connection,
             $cache,
@@ -150,8 +146,7 @@ class Instance
         CacheInterface $cache,
         LoggerInterface $logger = null,
         array $config = []
-    ): callable
-    {
+    ): callable {
         /** @var RelayBuilderInterface $builder */
         $builder = new Resources(
             $connection,
@@ -176,8 +171,7 @@ class Instance
         CacheInterface $cache,
         LoggerInterface $logger = null,
         array $config = []
-    ): ResponseInterface
-    {
+    ): ResponseInterface {
         return static::resourcesRelay(
             $connection,
             $cache,

@@ -41,10 +41,10 @@ class DynamicQueryBuilder extends RawQueryBuilder
     private function prepareSoql(string $soql): string
     {
         if (false === (preg_match_all(
-                '/' . self::VARIABLE_OPENING . '(.*?)' . self::VARIABLE_CLOSING . '/',
-                $soql,
-                $matches
-            ))) {
+            '/' . self::VARIABLE_OPENING . '(.*?)' . self::VARIABLE_CLOSING . '/',
+            $soql,
+            $matches
+        ))) {
             return $soql;
         }
 

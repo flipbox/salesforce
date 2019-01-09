@@ -15,7 +15,6 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Log\LoggerInterface;
 use Psr\SimpleCache\CacheInterface;
 
-
 /**
  * @author Flipbox Factory <hello@flipboxfactory.com>
  * @since 3.0.0
@@ -45,8 +44,7 @@ class Search
         string $search,
         LoggerInterface $logger = null,
         array $config = []
-    ): ResponseInterface
-    {
+    ): ResponseInterface {
         return static::searchRelay(
             $connection,
             $cache,
@@ -70,8 +68,7 @@ class Search
         string $search,
         LoggerInterface $logger = null,
         array $config = []
-    ): callable
-    {
+    ): callable {
         $builder = new SearchBuilder(
             $connection,
             $connection,

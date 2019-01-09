@@ -53,8 +53,7 @@ class SObject
         string $object,
         LoggerInterface $logger = null,
         array $config = []
-    ): callable
-    {
+    ): callable {
         /** @var RelayBuilderInterface $builder */
         $builder = new Basic(
             $connection,
@@ -83,8 +82,7 @@ class SObject
         string $object,
         LoggerInterface $logger = null,
         array $config = []
-    ): ResponseInterface
-    {
+    ): ResponseInterface {
         return static::basicRelay(
             $connection,
             $cache,
@@ -112,8 +110,7 @@ class SObject
         string $object,
         LoggerInterface $logger = null,
         array $config = []
-    ): ResponseInterface
-    {
+    ): ResponseInterface {
         return static::describeRelay(
             $connection,
             $cache,
@@ -137,8 +134,7 @@ class SObject
         string $object,
         LoggerInterface $logger = null,
         array $config = []
-    ): callable
-    {
+    ): callable {
         /** @var RelayBuilderInterface $builder */
         $builder = new Describe(
             $connection,
@@ -171,8 +167,7 @@ class SObject
         array $payload,
         LoggerInterface $logger = null,
         array $config = []
-    ): ResponseInterface
-    {
+    ): ResponseInterface {
         return static::createRelay(
             $connection,
             $object,
@@ -196,8 +191,7 @@ class SObject
         array $payload,
         LoggerInterface $logger = null,
         array $config = []
-    ): callable
-    {
+    ): callable {
 
         /** @var RelayBuilderInterface $builder */
         $builder = new Create(
@@ -233,8 +227,7 @@ class SObject
         string $id,
         LoggerInterface $logger = null,
         array $config = []
-    ): ResponseInterface
-    {
+    ): ResponseInterface {
         return static::readRelay(
             $connection,
             $cache,
@@ -262,8 +255,7 @@ class SObject
         string $id,
         LoggerInterface $logger = null,
         array $config = []
-    ): callable
-    {
+    ): callable {
         /** @var RelayBuilderInterface $builder */
         $builder = new Get(
             $connection,
@@ -300,8 +292,7 @@ class SObject
         string $id,
         LoggerInterface $logger = null,
         array $config = []
-    ): ResponseInterface
-    {
+    ): ResponseInterface {
         return static::updateRelay(
             $connection,
             $cache,
@@ -331,8 +322,7 @@ class SObject
         string $id,
         LoggerInterface $logger = null,
         array $config = []
-    ): callable
-    {
+    ): callable {
         /** @var RelayBuilderInterface $builder */
         $builder = new Update(
             $connection,
@@ -371,8 +361,7 @@ class SObject
         string $id = null,
         LoggerInterface $logger = null,
         array $config = []
-    ): callable
-    {
+    ): callable {
 
         /** @var RelayBuilderInterface $builder */
         $builder = new Upsert(
@@ -407,8 +396,7 @@ class SObject
         string $id = null,
         LoggerInterface $logger = null,
         array $config = []
-    ): ResponseInterface
-    {
+    ): ResponseInterface {
         return static::upsertRelay(
             $connection,
             $cache,
@@ -441,8 +429,7 @@ class SObject
         string $id,
         LoggerInterface $logger = null,
         array $config = []
-    ): ResponseInterface
-    {
+    ): ResponseInterface {
         return static::deleteRelay(
             $connection,
             $cache,
@@ -469,8 +456,7 @@ class SObject
         string $id,
         LoggerInterface $logger = null,
         array $config = []
-    ): callable
-    {
+    ): callable {
         /** @var RelayBuilderInterface $builder */
         $builder = new Delete(
             $connection,
