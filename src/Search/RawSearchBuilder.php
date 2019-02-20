@@ -28,17 +28,4 @@ class RawSearchBuilder extends AbstractSearchBuilder
     {
         return (string)$this->search;
     }
-
-    /**
-     * @return array
-     */
-    public function toConfig(): array
-    {
-        return array_merge(
-            parent::toConfig(),
-            [
-                'search' => $this->search
-            ]
-        );
-    }
 }

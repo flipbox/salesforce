@@ -10,17 +10,18 @@ namespace Flipbox\Salesforce\Search;
 
 /**
  * @author Flipbox Factory <hello@flipboxfactory.com>
- * @since 3.0.0
+ * @since 3.2.0
  */
-interface SearchBuilderInterface
+interface DynamicSearchBuilderInterface extends SearchBuilderInterface
 {
     /**
-     * @return string
+     * @return array
      */
-    public function build(): string;
+    public function getVariables(): array;
 
     /**
-     * @return string
+     * @param array $variables
+     * @return $this
      */
-    public function __toString();
+    public function setVariables(array $variables = []);
 }

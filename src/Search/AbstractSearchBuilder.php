@@ -25,16 +25,6 @@ abstract class AbstractSearchBuilder implements SearchBuilderInterface
     }
 
     /**
-     * @return array
-     */
-    public function toConfig(): array
-    {
-        return [
-            'class' => get_class($this)
-        ];
-    }
-
-    /**
      * @param array $properties
      */
     public function __construct(array $properties = [])

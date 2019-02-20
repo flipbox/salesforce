@@ -12,7 +12,7 @@ namespace Flipbox\Salesforce\Search;
  * @author Flipbox Factory <hello@flipboxfactory.com>
  * @since 3.0.0
  */
-class DynamicSearchBuilder extends RawSearchBuilder
+class DynamicSearchBuilder extends RawSearchBuilder implements DynamicSearchBuilderInterface
 {
     use DynamicVariablesAttributeTrait;
 
@@ -69,18 +69,5 @@ class DynamicSearchBuilder extends RawSearchBuilder
         }
 
         return $values;
-    }
-
-    /**
-     * @return array
-     */
-    public function toConfig(): array
-    {
-        return array_merge(
-            parent::toConfig(),
-            [
-                'variables' => $this->getVariables()
-            ]
-        );
     }
 }
