@@ -12,7 +12,7 @@ namespace Flipbox\Salesforce\Query;
  * @author Flipbox Factory <hello@flipboxfactory.com>
  * @since 3.0.0
  */
-class DynamicQueryBuilder extends RawQueryBuilder
+class DynamicQueryBuilder extends RawQueryBuilder implements DynamicQueryBuilderInterface
 {
     use DynamicVariablesAttributeTrait;
 

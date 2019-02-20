@@ -1,7 +1,7 @@
 {
   "name": "flipboxdigital/salesforce",
   "description": "Salesforce API.",
-  "version": "3.0.0",
+  "version": "3.1.0",
   "keywords": [
     "flipbox",
     "salesforce"
