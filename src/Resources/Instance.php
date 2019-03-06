@@ -8,7 +8,6 @@
 
 namespace Flipbox\Salesforce\Resources;
 
-use Flipbox\Relay\Builder\RelayBuilderInterface;
 use Flipbox\Relay\Salesforce\Builder\Resources\Describe;
 use Flipbox\Relay\Salesforce\Builder\Resources\Limits;
 use Flipbox\Relay\Salesforce\Builder\Resources\Resources;
@@ -42,8 +41,8 @@ class Instance
      * @return ResponseInterface
      */
     public static function describe(
-        ConnectionInterface $connection,
-        CacheInterface $cache,
+        ConnectionInterface $connection = null,
+        CacheInterface $cache = null,
         LoggerInterface $logger = null,
         array $config = []
     ): ResponseInterface {
@@ -63,22 +62,24 @@ class Instance
      * @return callable
      */
     public static function describeRelay(
-        ConnectionInterface $connection,
-        CacheInterface $cache,
+        ConnectionInterface $connection = null,
+        CacheInterface $cache = null,
         LoggerInterface $logger = null,
         array $config = []
     ): callable {
-        /** @var RelayBuilderInterface $builder */
+        $connection = $connection ?: Salesforce::getConnection();
+
         $builder = new Describe(
             $connection,
             $connection,
-            $cache,
+            $cache ?: Salesforce::getCache(),
             $logger ?: Salesforce::getLogger(),
             $config
         );
 
         return $builder->build();
     }
+
 
     /*******************************************
      * LIMITS
@@ -89,36 +90,11 @@ class Instance
      * @param CacheInterface $cache
      * @param LoggerInterface|null $logger
      * @param array $config
-     * @return callable
-     */
-    public static function limitsRelay(
-        ConnectionInterface $connection,
-        CacheInterface $cache,
-        LoggerInterface $logger = null,
-        array $config = []
-    ): callable {
-        /** @var RelayBuilderInterface $builder */
-        $builder = new Limits(
-            $connection,
-            $connection,
-            $cache,
-            $logger ?: Salesforce::getLogger(),
-            $config
-        );
-
-        return $builder->build();
-    }
-
-    /**
-     * @param ConnectionInterface $connection
-     * @param CacheInterface $cache
-     * @param LoggerInterface|null $logger
-     * @param array $config
      * @return ResponseInterface
      */
     public static function limits(
-        ConnectionInterface $connection,
-        CacheInterface $cache,
+        ConnectionInterface $connection = null,
+        CacheInterface $cache = null,
         LoggerInterface $logger = null,
         array $config = []
     ): ResponseInterface {
@@ -130,6 +106,33 @@ class Instance
         )();
     }
 
+    /**
+     * @param ConnectionInterface $connection
+     * @param CacheInterface $cache
+     * @param LoggerInterface|null $logger
+     * @param array $config
+     * @return callable
+     */
+    public static function limitsRelay(
+        ConnectionInterface $connection = null,
+        CacheInterface $cache = null,
+        LoggerInterface $logger = null,
+        array $config = []
+    ): callable {
+        $connection = $connection ?: Salesforce::getConnection();
+
+        $builder = new Limits(
+            $connection,
+            $connection,
+            $cache ?: Salesforce::getCache(),
+            $logger ?: Salesforce::getLogger(),
+            $config
+        );
+
+        return $builder->build();
+    }
+
+
     /*******************************************
      * RESOURCES
      *******************************************/
@@ -139,36 +142,11 @@ class Instance
      * @param CacheInterface $cache
      * @param LoggerInterface|null $logger
      * @param array $config
-     * @return callable
-     */
-    public static function resourcesRelay(
-        ConnectionInterface $connection,
-        CacheInterface $cache,
-        LoggerInterface $logger = null,
-        array $config = []
-    ): callable {
-        /** @var RelayBuilderInterface $builder */
-        $builder = new Resources(
-            $connection,
-            $connection,
-            $cache,
-            $logger ?: Salesforce::getLogger(),
-            $config
-        );
-
-        return $builder->build();
-    }
-
-    /**
-     * @param ConnectionInterface $connection
-     * @param CacheInterface $cache
-     * @param LoggerInterface|null $logger
-     * @param array $config
      * @return ResponseInterface
      */
     public static function resources(
-        ConnectionInterface $connection,
-        CacheInterface $cache,
+        ConnectionInterface $connection = null,
+        CacheInterface $cache = null,
         LoggerInterface $logger = null,
         array $config = []
     ): ResponseInterface {
@@ -178,5 +156,31 @@ class Instance
             $logger,
             $config
         )();
+    }
+
+    /**
+     * @param ConnectionInterface $connection
+     * @param CacheInterface $cache
+     * @param LoggerInterface|null $logger
+     * @param array $config
+     * @return callable
+     */
+    public static function resourcesRelay(
+        ConnectionInterface $connection = null,
+        CacheInterface $cache = null,
+        LoggerInterface $logger = null,
+        array $config = []
+    ): callable {
+        $connection = $connection ?: Salesforce::getConnection();
+
+        $builder = new Resources(
+            $connection,
+            $connection,
+            $cache ?: Salesforce::getCache(),
+            $logger ?: Salesforce::getLogger(),
+            $config
+        );
+
+        return $builder->build();
     }
 }

@@ -32,48 +32,50 @@ class Query
      *******************************************/
 
     /**
-     * @param ConnectionInterface $connection
-     * @param CacheInterface $cache
      * @param string $query
+     * @param ConnectionInterface|null $connection
+     * @param CacheInterface|null $cache
      * @param LoggerInterface|null $logger
      * @param array $config
      * @return ResponseInterface
      */
     public static function query(
-        ConnectionInterface $connection,
-        CacheInterface $cache,
         string $query,
+        ConnectionInterface $connection = null,
+        CacheInterface $cache = null,
         LoggerInterface $logger = null,
         array $config = []
     ): ResponseInterface {
         return static::queryRelay(
+            $query,
             $connection,
             $cache,
-            $query,
             $logger,
             $config
         )();
     }
 
     /**
+     * @param string $query
      * @param ConnectionInterface $connection
      * @param CacheInterface $cache
-     * @param string $query
      * @param LoggerInterface|null $logger
      * @param array $config
      * @return callable
      */
     public static function queryRelay(
-        ConnectionInterface $connection,
-        CacheInterface $cache,
         string $query,
+        ConnectionInterface $connection = null,
+        CacheInterface $cache = null,
         LoggerInterface $logger = null,
         array $config = []
     ): callable {
+        $connection = $connection ?: Salesforce::getConnection();
+
         $builder = new QueryBuilder(
             $connection,
             $connection,
-            $cache,
+            $cache ?: Salesforce::getCache(),
             $query,
             $logger ?: Salesforce::getLogger(),
             $config

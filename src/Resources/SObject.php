@@ -8,7 +8,6 @@
 
 namespace Flipbox\Salesforce\Resources;
 
-use Flipbox\Relay\Builder\RelayBuilderInterface;
 use Flipbox\Relay\Salesforce\Builder\Resources\SObject\Basic;
 use Flipbox\Relay\Salesforce\Builder\Resources\SObject\Describe;
 use Flipbox\Relay\Salesforce\Builder\Resources\SObject\Row\Create;
@@ -45,28 +44,23 @@ class SObject
      * @param string $object
      * @param LoggerInterface|null $logger
      * @param array $config
-     * @return callable
+     * @return ResponseInterface
      */
-    public static function basicRelay(
-        ConnectionInterface $connection,
-        CacheInterface $cache,
+    public static function basic(
         string $object,
+        ConnectionInterface $connection = null,
+        CacheInterface $cache = null,
         LoggerInterface $logger = null,
         array $config = []
-    ): callable {
-        /** @var RelayBuilderInterface $builder */
-        $builder = new Basic(
-            $connection,
+    ): ResponseInterface {
+        return static::basicRelay(
+            $object,
             $connection,
             $cache,
-            $object,
-            $logger ?: Salesforce::getLogger(),
+            $logger,
             $config
-        );
-
-        return $builder->build();
+        )();
     }
-
 
     /**
      * @param ConnectionInterface $connection
@@ -74,22 +68,27 @@ class SObject
      * @param string $object
      * @param LoggerInterface|null $logger
      * @param array $config
-     * @return ResponseInterface
+     * @return callable
      */
-    public static function basic(
-        ConnectionInterface $connection,
-        CacheInterface $cache,
+    public static function basicRelay(
         string $object,
+        ConnectionInterface $connection = null,
+        CacheInterface $cache = null,
         LoggerInterface $logger = null,
         array $config = []
-    ): ResponseInterface {
-        return static::basicRelay(
+    ): callable {
+        $connection = $connection ?: Salesforce::getConnection();
+
+        $builder = new Basic(
             $connection,
-            $cache,
+            $connection,
+            $cache ?: Salesforce::getCache(),
             $object,
-            $logger,
+            $logger ?: Salesforce::getLogger(),
             $config
-        )();
+        );
+
+        return $builder->build();
     }
 
     /*******************************************
@@ -105,16 +104,16 @@ class SObject
      * @return ResponseInterface
      */
     public static function describe(
-        ConnectionInterface $connection,
-        CacheInterface $cache,
         string $object,
+        ConnectionInterface $connection = null,
+        CacheInterface $cache = null,
         LoggerInterface $logger = null,
         array $config = []
     ): ResponseInterface {
         return static::describeRelay(
+            $object,
             $connection,
             $cache,
-            $object,
             $logger,
             $config
         )();
@@ -129,17 +128,18 @@ class SObject
      * @return callable
      */
     public static function describeRelay(
-        ConnectionInterface $connection,
-        CacheInterface $cache,
         string $object,
+        ConnectionInterface $connection = null,
+        CacheInterface $cache = null,
         LoggerInterface $logger = null,
         array $config = []
     ): callable {
-        /** @var RelayBuilderInterface $builder */
+        $connection = $connection ?: Salesforce::getConnection();
+
         $builder = new Describe(
             $connection,
             $connection,
-            $cache,
+            $cache ?: Salesforce::getCache(),
             $object,
             $logger ?: Salesforce::getLogger(),
             $config
@@ -162,16 +162,16 @@ class SObject
      * @return ResponseInterface
      */
     public static function create(
-        ConnectionInterface $connection,
         string $object,
         array $payload,
+        ConnectionInterface $connection = null,
         LoggerInterface $logger = null,
         array $config = []
     ): ResponseInterface {
         return static::createRelay(
-            $connection,
             $object,
             $payload,
+            $connection,
             $logger,
             $config
         )();
@@ -186,14 +186,14 @@ class SObject
      * @return callable
      */
     public static function createRelay(
-        ConnectionInterface $connection,
         string $object,
         array $payload,
+        ConnectionInterface $connection = null,
         LoggerInterface $logger = null,
         array $config = []
     ): callable {
+        $connection = $connection ?: Salesforce::getConnection();
 
-        /** @var RelayBuilderInterface $builder */
         $builder = new Create(
             $connection,
             $connection,
@@ -221,23 +221,22 @@ class SObject
      * @return ResponseInterface
      */
     public static function read(
-        ConnectionInterface $connection,
-        CacheInterface $cache,
         string $object,
         string $id,
+        ConnectionInterface $connection = null,
+        CacheInterface $cache = null,
         LoggerInterface $logger = null,
         array $config = []
     ): ResponseInterface {
         return static::readRelay(
-            $connection,
-            $cache,
             $object,
             $id,
+            $connection,
+            $cache,
             $logger,
             $config
         )();
     }
-
 
     /**
      * @param ConnectionInterface $connection
@@ -249,18 +248,19 @@ class SObject
      * @return callable
      */
     public static function readRelay(
-        ConnectionInterface $connection,
-        CacheInterface $cache,
         string $object,
         string $id,
+        ConnectionInterface $connection = null,
+        CacheInterface $cache = null,
         LoggerInterface $logger = null,
         array $config = []
     ): callable {
-        /** @var RelayBuilderInterface $builder */
+        $connection = $connection ?: Salesforce::getConnection();
+
         $builder = new Get(
             $connection,
             $connection,
-            $cache,
+            $cache ?: Salesforce::getCache(),
             $object,
             $id,
             $logger ?: Salesforce::getLogger(),
@@ -285,20 +285,20 @@ class SObject
      * @return ResponseInterface
      */
     public static function update(
-        ConnectionInterface $connection,
-        CacheInterface $cache,
         string $object,
         array $payload,
         string $id,
+        ConnectionInterface $connection = null,
+        CacheInterface $cache = null,
         LoggerInterface $logger = null,
         array $config = []
     ): ResponseInterface {
         return static::updateRelay(
-            $connection,
-            $cache,
             $object,
             $payload,
             $id,
+            $connection,
+            $cache,
             $logger,
             $config
         )();
@@ -315,19 +315,20 @@ class SObject
      * @return callable
      */
     public static function updateRelay(
-        ConnectionInterface $connection,
-        CacheInterface $cache,
         string $object,
         array $payload,
         string $id,
+        ConnectionInterface $connection = null,
+        CacheInterface $cache = null,
         LoggerInterface $logger = null,
         array $config = []
     ): callable {
-        /** @var RelayBuilderInterface $builder */
+        $connection = $connection ?: Salesforce::getConnection();
+
         $builder = new Update(
             $connection,
             $connection,
-            $cache,
+            $cache ?: Salesforce::getCache(),
             $object,
             $payload,
             $id,
@@ -351,31 +352,26 @@ class SObject
      * @param string|null $id
      * @param LoggerInterface|null $logger
      * @param array $config
-     * @return callable
+     * @return ResponseInterface
      */
-    public static function upsertRelay(
-        ConnectionInterface $connection,
-        CacheInterface $cache,
+    public static function upsert(
         string $object,
         array $payload,
         string $id = null,
+        ConnectionInterface $connection = null,
+        CacheInterface $cache = null,
         LoggerInterface $logger = null,
         array $config = []
-    ): callable {
-
-        /** @var RelayBuilderInterface $builder */
-        $builder = new Upsert(
-            $connection,
-            $connection,
-            $cache,
+    ): ResponseInterface {
+        return static::upsertRelay(
             $object,
             $payload,
-            empty($id) ? null : $id,
-            $logger ?: Salesforce::getLogger(),
+            $id,
+            $connection,
+            $cache,
+            $logger,
             $config
-        );
-
-        return $builder->build();
+        )();
     }
 
     /**
@@ -386,26 +382,31 @@ class SObject
      * @param string|null $id
      * @param LoggerInterface|null $logger
      * @param array $config
-     * @return ResponseInterface
+     * @return callable
      */
-    public static function upsert(
-        ConnectionInterface $connection,
-        CacheInterface $cache,
+    public static function upsertRelay(
         string $object,
         array $payload,
         string $id = null,
+        ConnectionInterface $connection = null,
+        CacheInterface $cache = null,
         LoggerInterface $logger = null,
         array $config = []
-    ): ResponseInterface {
-        return static::upsertRelay(
+    ): callable {
+        $connection = $connection ?: Salesforce::getConnection();
+
+        $builder = new Upsert(
             $connection,
-            $cache,
+            $connection,
+            $cache ?: Salesforce::getCache(),
             $object,
             $payload,
-            $id,
-            $logger,
+            empty($id) ? null : $id,
+            $logger ?: Salesforce::getLogger(),
             $config
-        )();
+        );
+
+        return $builder->build();
     }
 
 
@@ -423,18 +424,18 @@ class SObject
      * @return ResponseInterface
      */
     public static function delete(
-        ConnectionInterface $connection,
-        CacheInterface $cache,
         string $object,
         string $id,
+        ConnectionInterface $connection = null,
+        CacheInterface $cache = null,
         LoggerInterface $logger = null,
         array $config = []
     ): ResponseInterface {
         return static::deleteRelay(
-            $connection,
-            $cache,
             $object,
             $id,
+            $connection,
+            $cache,
             $logger,
             $config
         )();
@@ -450,18 +451,19 @@ class SObject
      * @return callable
      */
     public static function deleteRelay(
-        ConnectionInterface $connection,
-        CacheInterface $cache,
         string $object,
         string $id,
+        ConnectionInterface $connection = null,
+        CacheInterface $cache = null,
         LoggerInterface $logger = null,
         array $config = []
     ): callable {
-        /** @var RelayBuilderInterface $builder */
+        $connection = $connection ?: Salesforce::getConnection();
+
         $builder = new Delete(
             $connection,
             $connection,
-            $cache,
+            $cache ?: Salesforce::getCache(),
             $object,
             $id,
             $logger ?: Salesforce::getLogger(),

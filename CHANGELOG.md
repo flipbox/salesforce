@@ -1,6 +1,10 @@
 # Changelog
 All Notable changes to `flipboxdigital\salesforce` will be documented in this file
 
+## 3.3.0
+### Added
+- Criteria objects
+
 ## 3.2.0
 ### Added
 - `\Flipbox\Salesforce\Search\DynamicSearchBuilderInterface` to define getting and setting of variables

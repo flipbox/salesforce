@@ -31,48 +31,50 @@ class Search
      *******************************************/
 
     /**
-     * @param ConnectionInterface $connection
-     * @param CacheInterface $cache
+     * @param ConnectionInterface|null $connection
+     * @param CacheInterface|null $cache
      * @param string $search
      * @param LoggerInterface|null $logger
      * @param array $config
      * @return ResponseInterface
      */
     public static function search(
-        ConnectionInterface $connection,
-        CacheInterface $cache,
         string $search,
+        ConnectionInterface $connection = null,
+        CacheInterface $cache = null,
         LoggerInterface $logger = null,
         array $config = []
     ): ResponseInterface {
         return static::searchRelay(
+            $search,
             $connection,
             $cache,
-            $search,
             $logger,
             $config
         )();
     }
 
     /**
-     * @param ConnectionInterface $connection
-     * @param CacheInterface $cache
+     * @param ConnectionInterface|null $connection
+     * @param CacheInterface|null $cache
      * @param string $search
      * @param LoggerInterface|null $logger
      * @param array $config
      * @return callable
      */
     public static function searchRelay(
-        ConnectionInterface $connection,
-        CacheInterface $cache,
         string $search,
+        ConnectionInterface $connection = null,
+        CacheInterface $cache = null,
         LoggerInterface $logger = null,
         array $config = []
     ): callable {
+        $connection = $connection ?: Salesforce::getConnection();
+
         $builder = new SearchBuilder(
             $connection,
             $connection,
-            $cache,
+            $cache ?: Salesforce::getCache(),
             $search,
             $logger ?: Salesforce::getLogger(),
             $config

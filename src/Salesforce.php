@@ -8,8 +8,10 @@
 
 namespace Flipbox\Salesforce;
 
+use Flipbox\Salesforce\Connections\ConnectionInterface;
 use Flipbox\Skeleton\Logger\StaticLoggerTrait;
 use Psr\Log\LoggerInterface;
+use Psr\SimpleCache\CacheInterface;
 
 /**
  * @author Flipbox Factory <hello@flipboxfactory.com>
@@ -20,9 +22,74 @@ class Salesforce
     use StaticLoggerTrait;
 
     /**
+     * @var CacheInterface
+     */
+    private static $cache;
+
+    /**
+     * @var ConnectionInterface
+     */
+    private static $connection;
+
+    /**
      * @var LoggerInterface
      */
     private static $logger;
+
+
+    /*******************************************
+     * CACHE
+     *******************************************/
+
+    /**
+     * Get the cache
+     *
+     * @return CacheInterface
+     */
+    public static function getCache(): CacheInterface
+    {
+        return self::$cache;
+    }
+
+    /**
+     * Set the cache
+     *
+     * @param CacheInterface $cache
+     */
+    public static function setCache(CacheInterface $cache)
+    {
+        self::$cache = $cache;
+    }
+
+
+    /*******************************************
+     * CONNECTION
+     *******************************************/
+
+    /**
+     * Get the connection
+     *
+     * @return ConnectionInterface
+     */
+    public static function getConnection(): ConnectionInterface
+    {
+        return self::$connection;
+    }
+
+    /**
+     * Set the connection
+     *
+     * @param ConnectionInterface $connection
+     */
+    public static function setConnection(ConnectionInterface $connection)
+    {
+        self::$connection = $connection;
+    }
+
+
+    /*******************************************
+     * LOGGER
+     *******************************************/
 
     /**
      * Get a logger
