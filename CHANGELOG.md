@@ -1,6 +1,10 @@
 # Changelog
 All Notable changes to `flipboxdigital\salesforce` will be documented in this file
 
+## 3.3.1
+### Fixed
+- `\Flipbox\Salesforce\Criteria::upsert()` was requiring an SObject Id.
+
 ## 3.3.0
 ### Added
 - Criteria objects

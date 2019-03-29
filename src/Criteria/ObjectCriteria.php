@@ -134,7 +134,7 @@ class ObjectCriteria extends AbstractCriteria
         return SObject::upsert(
             $this->getObject(),
             $this->getPayload(),
-            $this->getId(),
+            $this->findId(),
             $this->getConnection(),
             $this->getCache(),
             $this->getLogger(),
