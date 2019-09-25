@@ -78,5 +78,4 @@ class Url
 
         return $builder->build();
     }
-
 }
