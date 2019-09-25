@@ -15,7 +15,7 @@
   ],
   "require": {
     "php": ">=7.0",
-    "flipboxdigital/relay-salesforce": "^2.0",
+    "flipboxdigital/relay-salesforce": "^2.1",
     "flipboxdigital/skeleton": "^2.1"
   },
   "require-dev": {
