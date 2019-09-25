@@ -1,6 +1,10 @@
 # Changelog
 All Notable changes to `flipboxdigital\salesforce` will be documented in this file
 
+### 3.4.0
+### Added
+- `\Flipbox\Salesforce\UrlCriteria` to make direct calls to resources
+
 ## 3.3.1
 ### Fixed
 - `\Flipbox\Salesforce\Criteria::upsert()` was requiring an SObject Id.
