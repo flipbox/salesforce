@@ -1,6 +1,9 @@
 # Changelog
 All Notable changes to `flipboxdigital\salesforce` will be documented in this file
 
+## 4.0.0
+- Updated dependencies: `flipboxdigital/relay-salesforce` for php 8 compatibility
+
 ### 3.4.0
 ### Added
 - `\Flipbox\Salesforce\UrlCriteria` to make direct calls to resources
