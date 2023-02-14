@@ -15,7 +15,7 @@
   ],
   "require": {
     "php": ">=8.0",
-    "flipboxdigital/relay-salesforce": "dev-feature/php8"
+    "flipboxdigital/relay-salesforce": "~3.0"
   },
   "require-dev": {
     "phpunit/phpunit": "^9.0",
